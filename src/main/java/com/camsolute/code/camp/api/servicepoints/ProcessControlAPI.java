@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -66,6 +67,7 @@ import com.camsolute.code.camp.lib.models.rest.SignalPacket;
 import com.camsolute.code.camp.lib.models.rest.VariableValue;
 import com.camsolute.code.camp.lib.utilities.Util;
 
+@Path(CampRest.ProcessControl.Prefix)
 public class ProcessControlAPI implements ProcessControlServicePointInterface{
 	
 	private static final Logger LOG = LogManager.getLogger(ProcessControlAPI.class);
@@ -75,7 +77,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 
 	public static String domainUri = CampRest.PROCESS_ENGINE_API_DOMAIN;
 
-	@Path(CampRest.ProcessControl.Prefix+CampRest.ProcessControlDaoService.START_PROCESS) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.START_PROCESS) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String startProcess(@QueryParam("processKey")String processKey, String request) {
 		long startTime = System.currentTimeMillis();
@@ -97,7 +99,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		return result;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.NOTIFY_PROCESSES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.NOTIFY_PROCESSES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public void messageProcesses(@QueryParam("messageType")String messageType, @QueryParam("messageName")String messageName, String object) {
 		long startTime = System.currentTimeMillis();
@@ -158,7 +160,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.NOTIFY_PROCESS) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.NOTIFY_PROCESS) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public void messageProcess(@QueryParam("processInstanceId")String processInstanceId, @QueryParam("messageType")String messageType, @QueryParam("messageName")String messageName, String object) {
 		long startTime = System.currentTimeMillis();
@@ -213,7 +215,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.NOTIFY_PROCESS_GET) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.NOTIFY_PROCESS_GET) @PUT
 	@Override
 	public void messageProcess(@QueryParam("processInstanceId")String processInstanceId, @QueryParam("messageName")String messageName, @QueryParam("businessKey")String businessKey, @QueryParam("objectStatus")String objectStatus, @QueryParam("objectBusinessId")String objectBusinessId,
 			@QueryParam("objectId")int objectId) {
@@ -245,7 +247,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.NOTIFY_PROCESS_EVENT) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.NOTIFY_PROCESS_EVENT) @POST @Consumes(MediaType.APPLICATION_JSON)
 	@Override
 	public void triggerMessageEvent(@QueryParam("processInstanceId")String processInstanceId, @QueryParam("businessKey")String businessKey, @QueryParam("messageName")String messageName, String variables) {
 		long startTime = System.currentTimeMillis();
@@ -272,7 +274,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.SIGNAL_PROCESSES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.SIGNAL_PROCESSES) @POST @Consumes(MediaType.APPLICATION_JSON)
 	@Override
 	public void signalProcessList(String signalPacket) {
 		long startTime = System.currentTimeMillis();
@@ -305,7 +307,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.SIGNAL_PROCESS) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.SIGNAL_PROCESS) @POST @Consumes(MediaType.APPLICATION_JSON)
 	@Override
 	public void signalProcess(@QueryParam("processInstanceId")String processInstanceId, @QueryParam("businessKey")String businessKey, String variables) {
 		long startTime = System.currentTimeMillis();
@@ -333,9 +335,9 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.CLAIM_TASK) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.CLAIM_TASK) @PUT
 	@Override
-	public void claimTask(@QueryParam("taskId")String taskId, String userId) {
+	public void claimTask(@QueryParam("taskId")String taskId, @QueryParam("userId")String userId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -354,7 +356,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.DELEGATE_TASK) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.DELEGATE_TASK) @PUT
 	@Override
 	public void delegateTask(@QueryParam("taskId")String taskId, @QueryParam("userId")String userId) {
 		long startTime = System.currentTimeMillis();
@@ -375,7 +377,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.COMPLETE_TASK) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.COMPLETE_TASK) @POST @Consumes(MediaType.APPLICATION_JSON)
 	@Override
 	public void completeTask(@QueryParam("taskId")String taskId, String variables) {
 		long startTime = System.currentTimeMillis();
@@ -396,7 +398,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		}
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.GET_TASK) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.GET_TASK) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String getTask(@QueryParam("taskId")String taskId) {
 		long startTime = System.currentTimeMillis();
@@ -417,7 +419,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		return result;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.GET_TASKS_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.GET_TASKS_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String getTasks(@QueryParam("processInstanceId")String processInstanceId, @QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
@@ -438,7 +440,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		return result;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessControlDaoService.GET_TASKS) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessControlDaoService.GET_TASKS) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String getTasks(@QueryParam("processInstanceId")String processInstanceId) {
 		long startTime = System.currentTimeMillis();

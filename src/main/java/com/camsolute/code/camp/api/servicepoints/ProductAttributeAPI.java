@@ -42,13 +42,13 @@ import com.camsolute.code.camp.lib.models.AttributeMap;
 import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.utilities.Util;
 
-@Path("/product/attribute")
+@Path(CampRest.AttributeDefinition.Prefix)
 public class ProductAttributeAPI implements AttributeServicePointInterface{
 
 	private static final Logger LOG = LogManager.getLogger(ProductAttributeAPI.class);
 	private static String fmt = "[%15s] [%s]";
 	
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadById(@PathParam("id")int id) {
 		long startTime = System.currentTimeMillis();
@@ -66,7 +66,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadByBusinessId(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
@@ -84,7 +84,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_BY_KEY) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.LOAD_BY_KEY) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadListByBusinessKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
@@ -102,7 +102,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadListByGroup(@QueryParam("group")String group) {
 		long startTime = System.currentTimeMillis();
@@ -120,7 +120,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadListByGroupVersion(@QueryParam("group")String group,@QueryParam("version")String version) {
 		long startTime = System.currentTimeMillis();
@@ -138,7 +138,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.SAVE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.SAVE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String save(String attribute) {
 		long startTime = System.currentTimeMillis();
@@ -156,7 +156,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.SAVE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.SAVE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String saveList(String attributeList) {
 		long startTime = System.currentTimeMillis();
@@ -174,7 +174,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String update(String attribute) {
 		long startTime = System.currentTimeMillis();
@@ -192,7 +192,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.UPDATE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.UPDATE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String updateList(String attributeList) {
 		long startTime = System.currentTimeMillis();
@@ -210,7 +210,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -228,7 +228,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_UPDATES_KEY) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.LOAD_UPDATES_KEY) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
@@ -246,7 +246,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_UPDATES_TARGET) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.LOAD_UPDATES_TARGET) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -264,7 +264,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadUpdate(String attribute, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -282,7 +282,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addToUpdates(String attribute, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -300,7 +300,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addListToUpdates(String attributeList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -318,7 +318,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -336,7 +336,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
@@ -354,7 +354,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -372,7 +372,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public int deleteFromUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -390,7 +390,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int deleteListFromUpdates(String attributeList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -408,7 +408,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.DELETE_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.DELETE_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public int deleteById(@PathParam("id")int id) {
 		long startTime = System.currentTimeMillis();
@@ -426,7 +426,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.DELETE_BY_BUSINESS_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.DELETE_BY_BUSINESS_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public int deleteByBusinessId(@QueryParam("attributeName")String attributeName) {
 		long startTime = System.currentTimeMillis();
@@ -444,7 +444,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.DELETE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.AttributeDefinitionDaoService.DELETE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int deleteList(String attributeList) {
 		long startTime = System.currentTimeMillis();
@@ -462,7 +462,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.DELETE_BY_PARENT_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.DELETE_BY_PARENT_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public int deleteList(@PathParam("rootId")int rootId) {
 		long startTime = System.currentTimeMillis();
@@ -480,7 +480,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.LOAD_BY_TYPE) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.LOAD_BY_TYPE) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadList(@QueryParam("attributeType")String attributeType) {
 		long startTime = System.currentTimeMillis();
@@ -588,7 +588,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadGroup(@QueryParam("parentId")int parentId, @QueryParam("groupName")String groupName) {
 		long startTime = System.currentTimeMillis();
@@ -606,7 +606,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.LOAD_AFTER_POSITION) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.LOAD_AFTER_POSITION) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadAfterPosition(@QueryParam("id")int id, @QueryParam("position")int position) {
 		long startTime = System.currentTimeMillis();
@@ -624,7 +624,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.LOAD_BEFORE_POSITION) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.LOAD_BEFORE_POSITION) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadBeforePosition(@QueryParam("id")int id, @QueryParam("position")int position) {
 		long startTime = System.currentTimeMillis();
@@ -642,7 +642,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
-	@Path(CampRest.AttributeDefinition.Prefix+CampRest.AttributeDefinitionDaoService.LOAD_POSITION_RANGE) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.AttributeDefinitionDaoService.LOAD_POSITION_RANGE) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String loadRange(@QueryParam("id")int id, @QueryParam("startPosition")int startPosition, @QueryParam("endPosition")int endPosition) {
 		long startTime = System.currentTimeMillis();

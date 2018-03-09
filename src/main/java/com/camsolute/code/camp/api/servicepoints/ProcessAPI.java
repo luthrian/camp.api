@@ -19,10 +19,20 @@
  ******************************************************************************/
 package com.camsolute.code.camp.api.servicepoints;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.camsolute.code.camp.lib.dao.rest.ProcessServicePointInterface;
+import com.camsolute.code.camp.lib.data.CampRest;
 import com.camsolute.code.camp.lib.models.process.Process.ProcessType;
 import com.camsolute.code.camp.lib.models.process.Process;
 import com.camsolute.code.camp.lib.models.process.ProcessDao;
@@ -30,12 +40,15 @@ import com.camsolute.code.camp.lib.models.process.ProcessInterface;
 import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.utilities.Util;
 
+@Path(CampRest.Process.Prefix)
 public class ProcessAPI implements ProcessServicePointInterface {
+
 	private static final Logger LOG = LogManager.getLogger(ProcessAPI.class);
 	private static String fmt = "[%15s] [%s]";
 	
+	@Path(CampRest.ProcessDaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadById(int id) {
+	public String loadById(@PathParam("id")int id) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -51,8 +64,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.LOAD_BY_INSTANCE_ID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadByInstanceId(String instanceId) {
+	public String loadByInstanceId(@QueryParam("instanceId")String instanceId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -68,8 +82,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.LOAD_BY_BUSINESS_ID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadListByBusinessId(String businessId) {
+	public String loadListByBusinessId(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -84,9 +99,10 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		}
 		return json;
 	}
-
+	
+	@Path(CampRest.ProcessDaoService.LOAD_BY_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadListByKey(String businessKey) {
+	public String loadListByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -102,8 +118,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.CREATE_EID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String create(String businessId, String executionId, String instanceId, String businessKey, String processName, String definitionId, String tenantId, String caseInstanceId, boolean ended, boolean suspended, String type) {
+	public String create(@QueryParam("businessId")String businessId, @QueryParam("executionId")String executionId, @QueryParam("instanceId")String instanceId, @QueryParam("businessKey")String businessKey, @QueryParam("processName")String processName, @QueryParam("definitionId")String definitionId, @QueryParam("tenantId")String tenantId, @QueryParam("caseInstanceId")String caseInstanceId, @QueryParam("ended")boolean ended, @QueryParam("suspended")boolean suspended, @QueryParam("type")String type) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -120,8 +137,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.CREATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String create(String businessId, String instanceId, String businessKey, String processName, String definitionId, String tenantId, String caseInstanceId, boolean ended, boolean suspended, String type) {
+	public String create(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("businessKey")String businessKey, @QueryParam("processName")String processName, @QueryParam("definitionId")String definitionId, @QueryParam("tenantId")String tenantId, @QueryParam("caseInstanceId")String caseInstanceId, @QueryParam("ended")boolean ended, @QueryParam("suspended")boolean suspended, @QueryParam("type")String type) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -138,6 +156,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.SAVE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String save(String process) {
 		long startTime = System.currentTimeMillis();
@@ -156,6 +175,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.SAVE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String saveList(String processList) {
 		long startTime = System.currentTimeMillis();
@@ -174,6 +194,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int update(String process) {
 		long startTime = System.currentTimeMillis();
@@ -192,6 +213,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.UPDATE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int updateList(String processList) {
 		long startTime = System.currentTimeMillis();
@@ -210,8 +232,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdates(String businessKey, String target) {
+	public String loadUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -227,8 +250,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.LOAD_UPDATES_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdatesByKey(String businessKey) {
+	public String loadUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -244,8 +268,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.LOAD_UPDATES_TARGET) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdatesByTarget(String target) {
+	public String loadUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -261,8 +286,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.LOAD_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdate(String instanceId, String businessId, String businessKey, String target) {
+	public String loadUpdate(@QueryParam("instanceId")String instanceId, @QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -278,26 +304,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.ProcessDaoService.ADD_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdate(String process, String businessKey, String target) {
-		long startTime = System.currentTimeMillis();
-		String _f = null;
-		String msg = null;
-		if(!Util._IN_PRODUCTION) {
-			_f = "[loadUpdate]";
-			msg = "====[ process service api : ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
-		}
-		Process<?,?> p = ProcessInterface._fromJson(process);
-		String json = ProcessDao.instance().loadUpdate(p,businessKey,target,!Util._IN_PRODUCTION).toJson();
-		if(!Util._IN_PRODUCTION) {
-			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
-			msg = "====[loadUpdate completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
-		}
-		return json;
-	}
-
-	@Override
-	public int addToUpdates(String instanceId, String businessId, String businessKey, String target) {
+	public int addToUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -313,8 +322,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addToUpdates(String processList, String businessKey, String target) {
+	public int addToUpdates(String processList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -331,8 +341,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteAllFromUpdates(String businessKey, String target) {
+	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -348,8 +359,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByKey(String businessKey) {
+	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -365,8 +377,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByTarget(String target) {
+	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -382,8 +395,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdates(String instanceId, String businessId, String businessKey, String target) {
+	public int deleteFromUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -399,8 +413,9 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.ProcessDaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdates(String processList, String businessKey, String target) {
+	public int deleteFromUpdates(String processList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;

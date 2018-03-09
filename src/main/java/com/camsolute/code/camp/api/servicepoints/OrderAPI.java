@@ -51,7 +51,7 @@ import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.utilities.Util;
 
 
-@Path("/order")
+@Path(CampRest.Order.Prefix)
 public class OrderAPI implements OrderServicePointInterface {
 	private static final Logger LOG = LogManager.getLogger(OrderAPI.class);
 	private static String fmt = "[%15s] [%s]";
@@ -61,7 +61,7 @@ public class OrderAPI implements OrderServicePointInterface {
 
 	public static String domainUri = CampRest.ORDER_API_DOMAIN;
 	
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.CREATE_ORDER) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Path(CampRest.DaoService.CREATE_ORDER) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
 	public String create(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("date")String date, @QueryParam("byDate")String byDate) {
 		boolean log = true;
@@ -87,7 +87,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.SAVE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.SAVE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String save(String order) {
 		long startTime = System.currentTimeMillis();
@@ -111,7 +111,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 	
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.SAVE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.SAVE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String saveList(String orderList) {
 		long startTime = System.currentTimeMillis();
@@ -135,7 +135,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 }
 			
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String update(String order){
 		long startTime = System.currentTimeMillis();
@@ -159,7 +159,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 	
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.UPDATE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.UPDATE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String updateList(String orderList) {
 		long startTime = System.currentTimeMillis();
@@ -181,7 +181,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.UPDATE_ATTRIBUTE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.UPDATE_ATTRIBUTE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String updateAttribute(@QueryParam("attributeType")String attributeType, @QueryParam("businessId")String businessId, @QueryParam("attributeValue")String attributeValue) {
 		long startTime = System.currentTimeMillis();
@@ -199,7 +199,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 	
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadById(@PathParam("id")int id) {
 			long startTime = System.currentTimeMillis();
@@ -241,7 +241,7 @@ public class OrderAPI implements OrderServicePointInterface {
 			return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_BY_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_BY_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadListByBusinessKey(@QueryParam("businessKey")String businessKey) {
 			long startTime = System.currentTimeMillis();
@@ -262,7 +262,7 @@ public class OrderAPI implements OrderServicePointInterface {
 			return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadListByGroup(@QueryParam("group")String group) {
 			long startTime = System.currentTimeMillis();
@@ -282,7 +282,7 @@ public class OrderAPI implements OrderServicePointInterface {
 			return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadListByGroupVersion(@QueryParam("group")String group,@QueryParam("version")String version) {
 			long startTime = System.currentTimeMillis();
@@ -302,7 +302,7 @@ public class OrderAPI implements OrderServicePointInterface {
 			return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -321,7 +321,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_UPDATES_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_UPDATES_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
@@ -341,7 +341,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_UPDATES_TARGET) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_UPDATES_TARGET) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -359,7 +359,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadUpdate(String order, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -379,7 +379,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addToUpdates(String order, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -397,7 +397,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addListToUpdates(String orderList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -415,7 +415,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -433,7 +433,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
@@ -452,7 +452,7 @@ public class OrderAPI implements OrderServicePointInterface {
 	}
 
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -470,7 +470,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -488,7 +488,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int deleteListFromUpdates(String orderList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
@@ -506,7 +506,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
@@ -524,7 +524,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addProcessReferences(@QueryParam("businessId")String businessId, @QueryParam("processList")String processList) {
 		long startTime = System.currentTimeMillis();
@@ -542,7 +542,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
@@ -561,7 +561,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int delAllProcessReferences(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
@@ -579,7 +579,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
@@ -598,7 +598,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.ProcessReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.ProcessReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadProcessReferences(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
@@ -616,7 +616,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addOrderPositionReference(@QueryParam("parentBusinessId")String orderBusinessId, @QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
@@ -634,7 +634,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addOrderPositionReferences(@QueryParam("parentBusinessId")String orderBusinessId, @QueryParam("orderPositionList")String orderPositionList) {
 		long startTime = System.currentTimeMillis();
@@ -652,7 +652,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int delOrderPositionReference(@QueryParam("parentBusinessId")String orderBusinessId, @QueryParam("buisinessId")String buisinessId) {
 		long startTime = System.currentTimeMillis();
@@ -670,7 +670,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int delOrderPositionReferences(@QueryParam("orderBusinessId")String orderBusinessId, String orderPositionList) {
 		long startTime = System.currentTimeMillis();
@@ -688,7 +688,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.OrderPositionReferenceDaoService.Prefix+CampRest.ReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadOrderPositions(@QueryParam("orderBusinessId")String orderBusinessId) {
 		long startTime = System.currentTimeMillis();
@@ -706,7 +706,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.LOAD_FIRST) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.LOAD_FIRST) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadFirst(@QueryParam("businessId")String businessId, @QueryParam("primary")boolean primary) {
 		long startTime = System.currentTimeMillis();
@@ -730,7 +730,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.LOAD_NEXT) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.LOAD_NEXT) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadNext(String order, @QueryParam("primary")boolean primary) {
 		long startTime = System.currentTimeMillis();
@@ -754,7 +754,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.LOAD_PREVIOUS) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.LOAD_PREVIOUS) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadPrevious(String order, @QueryParam("primary")boolean primary) {
 		long startTime = System.currentTimeMillis();
@@ -778,7 +778,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.LOAD_DATE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.LOAD_DATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadDate(@QueryParam("date")String date, @QueryParam("primary")boolean primary) {
 		long startTime = System.currentTimeMillis();
@@ -802,7 +802,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.LOAD_DATE_RANGE) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.LOAD_DATE_RANGE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadDateRange(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate, @QueryParam("primary")boolean primary) {
 		long startTime = System.currentTimeMillis();
@@ -826,7 +826,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.LOAD_DATE_BY_BID) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.LOAD_DATE_BY_BID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadDate(@QueryParam("businessId")String businessId, @QueryParam("date")String date, @QueryParam("primary")boolean primary) {
 		long startTime = System.currentTimeMillis();
@@ -850,7 +850,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.LOAD_DATE_RANGE_BY_BID) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.LOAD_DATE_RANGE_BY_BID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadDateRange(@QueryParam("businessId")String businessId, @QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate, @QueryParam("primary")boolean primary) {
 		long startTime = System.currentTimeMillis();
@@ -875,7 +875,7 @@ public class OrderAPI implements OrderServicePointInterface {
 	}
 
 
-	@Path(CampRest.Order.Prefix+CampRest.InstanceDaoService.ADD_INSTANCE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.InstanceDaoService.ADD_INSTANCE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int addInstance(String orderPosition, @QueryParam("useObjectId")boolean useObjectId) {
 		long startTime = System.currentTimeMillis();
