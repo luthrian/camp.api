@@ -60,7 +60,7 @@ public class ProductAPI implements ProductServicePointInterface {
 	
 	@Path(CampRest.Product.Prefix+CampRest.DaoService.CREATE_PRODUCT) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String create(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("group")String group, @QueryParam("version")String version, @QueryParam("date")String date) {
+	public String create(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("date")String date, @QueryParam("endOfLife")String endOfLife, @QueryParam("group")String group, @QueryParam("version")String version) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -69,13 +69,21 @@ public class ProductAPI implements ProductServicePointInterface {
 			msg = "====[ product service call: create product a product object instance and persist it to the database ]====";LOG.traceEntry(String.format(fmt,_f,msg));
 		}
 		Timestamp d = Util.Time.timestamp();
+		Timestamp eol = Util.Time.timestamp(Util.Time.nowPlus(1000, Util.Time.formatDateTime));
 		try {
 			d =  Util.Time.timestamp(date);
 		} catch(Exception e) {
 			if(!Util._IN_PRODUCTION){msg = "----[Exception! Date has wrong format. ("+date+"). Using current date and time instead.]----";LOG.info(String.format(fmt, _f,msg));}
 			e.printStackTrace();
 		}
+		try {
+			eol =  Util.Time.timestamp(endOfLife);
+		} catch(Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[Exception! endOfLife date has wrong format. ("+endOfLife+"). Using current date and time + 1000days instead.]----";LOG.info(String.format(fmt, _f,msg));}
+			e.printStackTrace();
+		}
 		Product p = new Product(businessId, businessKey, new Group(group), new Version(version),d);
+		p.history().endOfLife(eol);
 		if(!Util._IN_PRODUCTION){msg = "----[Created new Product("+businessId+")]----";LOG.info(String.format(fmt, _f,msg));}
 		p = ProductDao.instance().save(p,!Util._IN_PRODUCTION);
 		if(!Util._IN_PRODUCTION){msg = "----[Persisted Product instance]----";LOG.info(String.format(fmt, _f,msg));}

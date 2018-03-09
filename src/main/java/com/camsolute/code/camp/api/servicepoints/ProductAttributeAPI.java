@@ -42,7 +42,7 @@ import com.camsolute.code.camp.lib.models.AttributeMap;
 import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.utilities.Util;
 
-@Path("/product")
+@Path("/product/attribute")
 public class ProductAttributeAPI implements AttributeServicePointInterface{
 
 	private static final Logger LOG = LogManager.getLogger(ProductAttributeAPI.class);

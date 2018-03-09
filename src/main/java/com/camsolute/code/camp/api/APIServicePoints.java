@@ -46,16 +46,6 @@ public class APIServicePoints extends ResourceConfig {
 			_f = "[APIServicePoints]";
 			msg = "====[ Configuring service points... ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-			
-		//TODO: put this in a better place 
-		// register required jdbc driver
-//		try{
-//			DriverManager.registerDriver(new org.mariadb.jdbc.Driver ());
-//		} catch (SQLException e) {
-//			if(!Util._IN_PRODUCTION){msg = "----[SQLExceeption! Failed to register jdbc driver DriverManager.registerDriver(new org.mariadb.jdbc.Driver())]----";LOG.info(String.format(fmt, _f,msg));}
-//			e.printStackTrace();
-//		}
-		
 		packages("com.camsolute.code.camp.api.servicepoints");
 			
 		register(AuthenticationFilter.class);
