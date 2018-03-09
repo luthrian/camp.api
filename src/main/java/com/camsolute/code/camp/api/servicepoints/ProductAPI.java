@@ -253,6 +253,46 @@ public class ProductAPI implements ProductServicePointInterface {
 			return json;
 	}
 
+	@Path(CampRest.Product.Prefix+CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadListByGroup(@QueryParam("group")String group) {
+			long startTime = System.currentTimeMillis();
+			String _f = null;
+			String msg = null;
+			if(!Util._IN_PRODUCTION) {
+				_f = "[loadListByGroup]";
+				msg = "====[ product service api: load list of orders by group '"+group+"' ]====";LOG.traceEntry(String.format(fmt,_f,msg));
+			}
+			
+			String json = ((ProductList)ProductDao.instance().loadListByGroup(group, !Util._IN_PRODUCTION)).toJson();
+			
+			if(!Util._IN_PRODUCTION) {
+				String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+				msg = "====[loadListByGroup completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+			}
+			return json;
+	}
+
+	@Path(CampRest.Product.Prefix+CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadListByGroupVersion(@QueryParam("group")String group,@QueryParam("version")String version) {
+			long startTime = System.currentTimeMillis();
+			String _f = null;
+			String msg = null;
+			if(!Util._IN_PRODUCTION) {
+				_f = "[loadListByGroupVersion]";
+				msg = "====[ product service api: load list of orders by group '"+group+"' and version '"+version+"']====";LOG.traceEntry(String.format(fmt,_f,msg));
+			}
+			
+			String json = ((ProductList)ProductDao.instance().loadListByGroupVersion(group, version, !Util._IN_PRODUCTION)).toJson();
+			
+			if(!Util._IN_PRODUCTION) {
+				String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+				msg = "====[loadListByGroupVersion completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+			}
+			return json;
+	}
+
 	@Path(CampRest.Product.Prefix+CampRest.DaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {

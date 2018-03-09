@@ -102,6 +102,42 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 		return json;
 	}
 
+	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Override
+	public String loadListByGroup(@QueryParam("group")String group) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[loadListByGroup]";
+			msg = "====[  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String json = AttributeDao.instance().loadListByGroup(group, !Util._IN_PRODUCTION).toJson();
+				if(!Util._IN_PRODUCTION) {
+					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+					msg = "====[loadListByGroup completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+				}
+		return json;
+	}
+
+	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)	
+	@Override
+	public String loadListByGroupVersion(@QueryParam("group")String group,@QueryParam("version")String version) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[loadListByGroupVersion]";
+			msg = "====[  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String json = AttributeDao.instance().loadListByGroupVersion(group, version, !Util._IN_PRODUCTION).toJson();
+				if(!Util._IN_PRODUCTION) {
+					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+					msg = "====[loadListByGroupVersion completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+				}
+		return json;
+	}
+
 	@Path(CampRest.AttributeDefinition.Prefix+CampRest.DaoService.SAVE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String save(String attribute) {

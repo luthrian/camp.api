@@ -207,7 +207,7 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String _f = null;
 			String msg = null;
 			if(!Util._IN_PRODUCTION) {
-				_f = "[load]";
+				_f = "[loadListByBusinessId]";
 				msg = "====[ order service api: load list of orders by business key'"+businessKey+"' ]====";LOG.traceEntry(String.format(fmt,_f,msg));
 			}
 			
@@ -218,6 +218,46 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 				msg = "====[ service call executed.]====";LOG.traceExit(String.format(fmt,_f,msg+time));
 			}
 			
+			return json;
+	}
+
+	@Path(CampRest.OrderPosition.Prefix+CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadListByGroup(@QueryParam("group")String group) {
+			long startTime = System.currentTimeMillis();
+			String _f = null;
+			String msg = null;
+			if(!Util._IN_PRODUCTION) {
+				_f = "[loadListByGroup]";
+				msg = "====[ order service api: load list of orders by group '"+group+"' ]====";LOG.traceEntry(String.format(fmt,_f,msg));
+			}
+			
+			String json = ((OrderPositionList)OrderPositionDao.instance().loadListByGroup(group, !Util._IN_PRODUCTION)).toJson();
+			
+			if(!Util._IN_PRODUCTION) {
+				String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+				msg = "====[loadListByGroup completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+			}
+			return json;
+	}
+
+	@Path(CampRest.OrderPosition.Prefix+CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadListByGroupVersion(@QueryParam("group")String group,@QueryParam("verions")String version) {
+			long startTime = System.currentTimeMillis();
+			String _f = null;
+			String msg = null;
+			if(!Util._IN_PRODUCTION) {
+				_f = "[load]";
+				msg = "====[ order service api: load list of orders by group '"+group+"' and version '"+version+"' ]====";LOG.traceEntry(String.format(fmt,_f,msg));
+			}
+			
+			String json = ((OrderPositionList)OrderPositionDao.instance().loadListByGroupVersion(group, version, !Util._IN_PRODUCTION)).toJson();
+			
+			if(!Util._IN_PRODUCTION) {
+				String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+				msg = "====[loadListByGroupVersion completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+			}
 			return json;
 	}
 
