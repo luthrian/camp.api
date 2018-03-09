@@ -40,6 +40,7 @@ import com.camsolute.code.camp.lib.dao.rest.OrderServicePointInterface;
 import com.camsolute.code.camp.lib.data.CampRest;
 import com.camsolute.code.camp.lib.models.CampInstanceDao;
 import com.camsolute.code.camp.lib.models.order.Order;
+import com.camsolute.code.camp.lib.models.order.Order.UpdateAttribute;
 import com.camsolute.code.camp.lib.models.order.OrderDao;
 import com.camsolute.code.camp.lib.models.order.OrderInterface;
 import com.camsolute.code.camp.lib.models.order.OrderList;
@@ -180,6 +181,24 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String updateAttribute(String attributeType, String businessId, String attributeValue) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[updateAttribute]";
+			msg = "====[ order service api: update order attribute ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String json = OrderDao.instance().updateAttribute(UpdateAttribute.valueOf(attributeType), businessId, attributeValue, !Util._IN_PRODUCTION).toJson();
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[updateAttribute completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return json;
+	}
+	
 	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadById(@PathParam("id")int id) {
