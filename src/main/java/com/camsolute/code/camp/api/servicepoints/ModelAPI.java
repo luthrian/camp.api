@@ -34,9 +34,12 @@ import org.apache.logging.log4j.Logger;
 import com.camsolute.code.camp.lib.data.CampRest;
 
 import com.camsolute.code.camp.lib.dao.rest.ModelServicePointInterface;
+import com.camsolute.code.camp.lib.models.Group;
+import com.camsolute.code.camp.lib.models.Model;
 import com.camsolute.code.camp.lib.models.ModelDao;
 import com.camsolute.code.camp.lib.models.ModelInterface;
 import com.camsolute.code.camp.lib.models.ModelList;
+import com.camsolute.code.camp.lib.models.Version;
 import com.camsolute.code.camp.lib.utilities.Util;
 
 @Path(CampRest.Model.Prefix)
@@ -134,6 +137,30 @@ public class ModelAPI implements ModelServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.DaoService.CREATE_MODEL) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String create(@QueryParam("businessId")String businessId, @QueryParam("releaseDate")String releaseDate, @QueryParam("endOfLife")String endOfLife, @QueryParam("businessKey")String businessKey, @QueryParam("group")String group, @QueryParam("version")String version) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[create]";
+			msg = "====[ model service call:  create and persist a new model object instance]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String json = "";
+		try{
+			json = ModelDao.instance().create(businessId, Util.Time.timestamp(releaseDate), Util.Time.timestamp(endOfLife), businessKey, new Version(version), new Group(group), !Util._IN_PRODUCTION).toJson();
+		} catch (Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform model to json FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+			e.printStackTrace();
+		}
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[create completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return json;
+	}
+		
 	@Path(CampRest.DaoService.SAVE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String save(String model) {
@@ -280,7 +307,7 @@ public class ModelAPI implements ModelServicePointInterface {
 
 	@Path(CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addToUpdates(String model, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addToUpdates(String model, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -293,12 +320,12 @@ public class ModelAPI implements ModelServicePointInterface {
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[addToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addListToUpdates(String modelList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addListToUpdates(String modelList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -311,12 +338,12 @@ public class ModelAPI implements ModelServicePointInterface {
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[addListToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -329,12 +356,12 @@ public class ModelAPI implements ModelServicePointInterface {
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteAllFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
+	public String deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -347,12 +374,12 @@ public class ModelAPI implements ModelServicePointInterface {
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteFromUpdatesByKey completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
+	public String deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -365,12 +392,12 @@ public class ModelAPI implements ModelServicePointInterface {
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteFromUpdatesByTarget completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -383,12 +410,12 @@ public class ModelAPI implements ModelServicePointInterface {
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteListFromUpdates(String modelList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteListFromUpdates(String modelList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -401,7 +428,7 @@ public class ModelAPI implements ModelServicePointInterface {
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteListFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.InstanceDaoService.LOAD_FIRST) @GET @Produces(MediaType.APPLICATION_JSON)

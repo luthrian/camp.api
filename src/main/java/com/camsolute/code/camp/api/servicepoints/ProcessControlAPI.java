@@ -144,7 +144,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 				break;
 		}
 		if(m != null) {
-			for(Process<?,?> p:pl) {
+			for(Process<?> p:pl) {
 				m.setProcessInstanceId(p.instanceId());
 				String json = m.toJson();
 				String prefix = CampRest.ProcessEngine.Prefix;		
@@ -287,7 +287,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		SignalPacket sp = SignalPacket._fromJson(signalPacket);
 		ProcessList pl = sp.processList();
 		String variables = sp.variables().toJson();
-		for(Process<?,?> p : pl) {
+		for(Process<?> p : pl) {
 			String prefix = CampRest.ProcessEngine.Prefix;
 		
 			String serviceUri = CampRest.ProcessEngineDaoService.callRequest(prefix,CampRest.ProcessEngineDaoService.Request.GET_EXECUTIONS);

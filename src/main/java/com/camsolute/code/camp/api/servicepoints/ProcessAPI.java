@@ -128,7 +128,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			_f = "[create]";
 			msg = "====[ process service api : ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		Process<?,?> p = ProcessInterface._process(businessId,executionId,instanceId,businessKey,processName,definitionId,tenantId,caseInstanceId,ended,suspended,ProcessType.valueOf(type));
+		Process<?> p = ProcessInterface._process(businessId,executionId,instanceId,businessKey,processName,definitionId,tenantId,caseInstanceId,ended,suspended,ProcessType.valueOf(type));
 		String json = ProcessDao.instance().save(p,!Util._IN_PRODUCTION).toJson();
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
@@ -147,7 +147,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			_f = "[create]";
 			msg = "====[ process service api : ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		Process<?,?> p = ProcessInterface._process(businessId,instanceId,businessKey,processName,definitionId,tenantId,caseInstanceId,ended,suspended,ProcessType.valueOf(type));
+		Process<?> p = ProcessInterface._process(businessId,instanceId,businessKey,processName,definitionId,tenantId,caseInstanceId,ended,suspended,ProcessType.valueOf(type));
 		String json = ProcessDao.instance().save(p,!Util._IN_PRODUCTION).toJson();
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
@@ -166,7 +166,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			_f = "[save]";
 			msg = "====[ process service api : ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		Process<?,?> p = ProcessInterface._fromJson(process);
+		Process<?> p = ProcessInterface._fromJson(process);
 		String json = ProcessDao.instance().save(p,!Util._IN_PRODUCTION).toJson();
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
@@ -196,7 +196,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 
 	@Path(CampRest.ProcessDaoService.UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int update(String process) {
+	public String update(String process) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -204,18 +204,18 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			_f = "[update]";
 			msg = "====[ process service api : ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		Process<?,?> p = ProcessInterface._fromJson(process);
+		Process<?> p = ProcessInterface._fromJson(process);
 		int retVal = ProcessDao.instance().update(p,!Util._IN_PRODUCTION);
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[update completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.UPDATE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int updateList(String processList) {
+	public String updateList(String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -229,7 +229,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[updateList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
@@ -306,7 +306,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 
 	@Path(CampRest.ProcessDaoService.ADD_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addToUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addToUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -319,12 +319,12 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addToUpdates(String processList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addToUpdates(String processList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -338,12 +338,12 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -356,12 +356,12 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteAllFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
+	public String deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -374,12 +374,12 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdatesByKey completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
+	public String deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -392,12 +392,12 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdatesByTarget completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteFromUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -410,12 +410,12 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessDaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdates(String processList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteFromUpdates(String processList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -429,7 +429,7 @@ public class ProcessAPI implements ProcessServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 }

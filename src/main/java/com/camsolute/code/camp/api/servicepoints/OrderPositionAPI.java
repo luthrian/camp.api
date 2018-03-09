@@ -340,7 +340,7 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 
 	@Path(CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addToUpdates(String orderPosition, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addToUpdates(String orderPosition, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -353,12 +353,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addListToUpdates(String orderPositionList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addListToUpdates(String orderPositionList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -371,12 +371,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addListToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -389,12 +389,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteAllFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
+	public String deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -407,12 +407,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteAllFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
+	public String deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -425,12 +425,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdatesByTarget completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -443,12 +443,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteListFromUpdates(String orderPositionList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteListFromUpdates(String orderPositionList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -461,12 +461,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteListFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
+	public String addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -479,12 +479,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addProcessReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addProcessReferences(@QueryParam("businessId")String businessId, @QueryParam("processList")String processList) {
+	public String addProcessReferences(@QueryParam("businessId")String businessId, @QueryParam("processList")String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -497,12 +497,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
+	public String delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -516,12 +516,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delAllProcessReferences(@QueryParam("businessId")String businessId) {
+	public String delAllProcessReferences(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -534,12 +534,12 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delAllProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
+	public String delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -553,7 +553,7 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
@@ -744,7 +744,7 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 
 	@Path(CampRest.InstanceDaoService.ADD_INSTANCE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addInstance(String orderPosition, @QueryParam("useObjectId")boolean useObjectId) {
+	public String addInstance(String orderPosition, @QueryParam("useObjectId")boolean useObjectId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -763,7 +763,7 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addInstance completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 }

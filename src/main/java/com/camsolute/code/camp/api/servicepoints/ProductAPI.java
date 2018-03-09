@@ -50,7 +50,7 @@ import com.camsolute.code.camp.lib.utilities.Util;
 
 @Path(CampRest.Product.Prefix)
 public class ProductAPI implements ProductServicePointInterface {
-	private static final Logger LOG = LogManager.getLogger(OrderAPI.class);
+	private static final Logger LOG = LogManager.getLogger(ProductAPI.class);
 	private static String fmt = "[%15s] [%s]";
 	
 	
@@ -115,10 +115,24 @@ public class ProductAPI implements ProductServicePointInterface {
 			msg = "====[ save product ]====";LOG.traceEntry(String.format(fmt,_f,msg));
 		}
 		
-		Product p = ProductInterface._fromJson(product);
+		Product p = null;
+		
+		try {
+			p = ProductInterface._fromJson(product);
+		} catch(Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform from FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+			e.printStackTrace();
+		}
+		
 		p = ProductDao.instance().save(p,!Util._IN_PRODUCTION);
 			
-		String json = p.toJson();
+		String json = null;
+		try {	
+			json = p.toJson();
+		} catch (Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform to FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+			e.printStackTrace();
+		}
 		
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
@@ -372,6 +386,36 @@ public class ProductAPI implements ProductServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.DaoService.LOAD_UPDATE_BY_BUSINESSID) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadUpdateByBusinessId(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[loadUpdate]";
+			msg = "====[ product service call: load an product that is registered in updates ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String[] ids = businessId.split(Util.DB._VS);
+		if(ids.length <2) {
+			if(!Util._IN_PRODUCTION){msg = "----[PARAMETER FORMAT ERROR! business id has wrong format.Format must be <product.businessId>"+Util.DB._VS+"<modelId> ]----";LOG.info(String.format(fmt, _f,msg));}
+			return "";
+		}
+		String json = "{}";
+		try{
+			json = ProductDao.instance().loadUpdate(ids[0], Integer.valueOf(ids[1]), businessKey, target, !Util._IN_PRODUCTION).toJson();
+		} catch (Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform product to json FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+			e.printStackTrace();
+		}
+		
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[loadUpdate completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return json;
+	}
+
 	@Path(CampRest.DaoService.LOAD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadUpdate(String product, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
@@ -383,7 +427,13 @@ public class ProductAPI implements ProductServicePointInterface {
 			msg = "====[ product service call: load an product that is registered in updates ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
 		
-		String json = ProductDao.instance().loadUpdate(ProductInterface._fromJson(product), businessKey, target, !Util._IN_PRODUCTION).toJson();
+		String json = "{}";
+		try { 
+			json = ProductDao.instance().loadUpdate(ProductInterface._fromJson(product), businessKey, target, !Util._IN_PRODUCTION).toJson();
+		} catch (Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+			e.printStackTrace();
+		}
 		
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
@@ -392,9 +442,32 @@ public class ProductAPI implements ProductServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.ADD_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addToUpdates(String product, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addToUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[addToUpdates]";
+			msg = "====[ product service call: register an product in the updates table ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String[] ids = businessId.split(Util.DB._VS);
+		if(ids.length <2) {
+			if(!Util._IN_PRODUCTION){msg = "----[ERROR! business id format error! Format must be <product.businessId>"+Util.DB._VS+"<model.Id> ]----";LOG.info(String.format(fmt, _f,msg));}
+			return "0";
+		}
+		int retVal = ProductDao.instance().addToUpdates(ids[0], Integer.valueOf(ids[1]), businessKey, target, !Util._IN_PRODUCTION);
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[addToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return String.valueOf(retVal);
+	}
+
+	@Path(CampRest.DaoService.ADD_UPDATE_POST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String addToUpdatesPost(String product, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -407,12 +480,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addListToUpdates(String productList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addListToUpdates(String productList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -425,12 +498,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addListToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -443,12 +516,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteAllFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -461,12 +534,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
+	public String addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -479,12 +552,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addProcessReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addProcessReferences(@QueryParam("businessId")String businessId, @QueryParam("processList")String processList) {
+	public String addProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -492,17 +565,25 @@ public class ProductAPI implements ProductServicePointInterface {
 			_f = "[addProcessReferences]";
 			msg = "====[ product service call: register association with a list of processes in the reference table ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		int retVal = ProductDao.instance().addProcessReferences(businessId, ProcessList._fromJson(processList), !Util._IN_PRODUCTION);
+		if(!Util._IN_PRODUCTION){msg = "----[product service call: add process references JSON("+processList+")]----";LOG.info(String.format(fmt, _f,msg));}
+		int retVal = 0;
+		try {
+			retVal = ProductDao.instance().addProcessReferences(businessId, ProcessList._fromJson(processList), !Util._IN_PRODUCTION);
+		} catch(Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+			e.printStackTrace();
+		}
+			
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
+	public String delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -516,12 +597,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delAllProcessReferences(@QueryParam("businessId")String businessId) {
+	public String delAllProcessReferences(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -534,12 +615,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delAllProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
+	public String delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -553,7 +634,7 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ProcessReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
@@ -566,7 +647,8 @@ public class ProductAPI implements ProductServicePointInterface {
 			_f = "[loadProcessReferences]";
 			msg = "====[ product service call: load all associated processes registered in the reference table ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		String json = ((ProcessList)ProductDao.instance().loadProcessReferences(businessId, !Util._IN_PRODUCTION)).toJson();
+		String json = ProductDao.instance().loadProcessReferences(businessId, !Util._IN_PRODUCTION).toJson();
+		if(!Util._IN_PRODUCTION){msg = "----[product service call: loadProcessReferences.JSON("+json+")]----";LOG.info(String.format(fmt, _f,msg));}
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[loadProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
@@ -744,7 +826,7 @@ public class ProductAPI implements ProductServicePointInterface {
 
 	@Path(CampRest.InstanceDaoService.ADD_INSTANCE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addInstance(String product, @QueryParam("useObjectId")boolean useObjectId) {
+	public String addInstance(String product, @QueryParam("useObjectId")boolean useObjectId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -763,12 +845,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addInstance completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
+	public String deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -782,12 +864,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdatesByKey completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
+	public String deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -800,12 +882,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[deleteFromUpdatesByTarget completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addModelReference(@QueryParam("parentBusinessId")String businessId, @QueryParam("modelId")int modelId) {
+	public String addModelReference(@QueryParam("parentBusinessId")String businessId, @QueryParam("businessId")int modelId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -818,12 +900,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addModelReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addModelReferences(@QueryParam("parentBusinessId")String businessId, String modelList) {
+	public String addModelReferences(@QueryParam("parentBusinessId")String businessId, String modelList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -836,12 +918,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addModelReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delModelReference(@QueryParam("parentBusinessId")String businessId, @QueryParam("modelId")int modelId) {
+	public String delModelReference(@QueryParam("parentBusinessId")String businessId, @QueryParam("businessId")int modelId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -854,12 +936,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delModelReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delAllModelReferences(@QueryParam("parentBusinessId")String businessId) {
+	public String delAllModelReferences(@QueryParam("parentBusinessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -872,12 +954,12 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delAllModelReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delModelReferences(@QueryParam("parentBusinessId")String businessId, String modelList) {
+	public String delModelReferences(@QueryParam("parentBusinessId")String businessId, String modelList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -890,7 +972,7 @@ public class ProductAPI implements ProductServicePointInterface {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delModelReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)

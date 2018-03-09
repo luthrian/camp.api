@@ -284,7 +284,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 
 	@Path(CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addToUpdates(String attribute, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addToUpdates(String attribute, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -297,12 +297,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[addToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addListToUpdates(String attributeList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String addListToUpdates(String attributeList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -315,12 +315,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[addListToUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -333,12 +333,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteAllFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
+	public String deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -351,12 +351,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteFromUpdatesByKey completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int deleteFromUpdatesByTarget(@QueryParam("target")String target) {
+	public String deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -369,12 +369,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteFromUpdatesByTarget completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int deleteFromUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteFromUpdates(@QueryParam("instanceId")String instanceId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -387,12 +387,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteListFromUpdates(String attributeList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
+	public String deleteListFromUpdates(String attributeList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -405,12 +405,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteListFromUpdates completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeDefinitionDaoService.DELETE_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int deleteById(@PathParam("id")int id) {
+	public String deleteById(@PathParam("id")int id) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -423,12 +423,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteById completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeDefinitionDaoService.DELETE_BY_BUSINESS_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int deleteByBusinessId(@QueryParam("attributeName")String attributeName) {
+	public String deleteByBusinessId(@QueryParam("attributeName")String attributeName) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -441,12 +441,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteByBusinessId completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeDefinitionDaoService.DELETE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteList(String attributeList) {
+	public String deleteList(String attributeList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -459,12 +459,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeDefinitionDaoService.DELETE_BY_PARENT_ID) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int deleteList(@PathParam("rootId")int rootId) {
+	public String deleteList(@PathParam("rootId")int rootId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -477,7 +477,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeDefinitionDaoService.LOAD_BY_TYPE) @GET @Produces(MediaType.APPLICATION_JSON)	
@@ -572,7 +572,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 
 	@Path(CampRest.Attribute.Prefix+CampRest.AttributeDaoService.UPDATE_ALL) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int updateAttributesByObjectId(@QueryParam("objectId")int objectId, String attributeList) {
+	public String updateAttributesByObjectId(@QueryParam("objectId")int objectId, String attributeList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -585,7 +585,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[updateAttributesByObjectId completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeDefinitionDaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)	
@@ -698,7 +698,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.AttributeValueDaoService.UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int update(@QueryParam("objectId")int objectId, String attribute) {
+	public String update(@QueryParam("objectId")int objectId, String attribute) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -711,12 +711,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[update completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.AttributeValueDaoService.UPDATE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int updateList(@QueryParam("objectId")int objectId, String attributeList) {
+	public String updateList(@QueryParam("objectId")int objectId, String attributeList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -729,12 +729,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[updateList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.AttributeValueDaoService.DELETE_GET) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public int delete(@QueryParam("objectId")int objectId, @QueryParam("attributeId")int attributeId, @QueryParam("valueId")int valueId, @QueryParam("attributeType")String attributeType) {
+	public String delete(@QueryParam("objectId")int objectId, @QueryParam("attributeId")int attributeId, @QueryParam("valueId")int valueId, @QueryParam("attributeType")String attributeType) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -747,12 +747,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[delete completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.AttributeValueDaoService.DELETE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delete(@QueryParam("objectId")int objectId, String attribute) {
+	public String delete(@QueryParam("objectId")int objectId, String attribute) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -765,12 +765,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[delete completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.AttributeValueDaoService.DELETE_LIST) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int deleteList(@QueryParam("objectId")int objectId, String attributeList) {
+	public String deleteList(@QueryParam("objectId")int objectId, String attributeList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -783,7 +783,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 					msg = "====[deleteList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 				}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.DaoService.LOAD) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
@@ -1022,7 +1022,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.ProcessReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
+	public String addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -1035,12 +1035,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addProcessReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.ProcessReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int addProcessReferences(@QueryParam("businessId")String businessId, @QueryParam("processList")String processList) {
+	public String addProcessReferences(@QueryParam("businessId")String businessId, @QueryParam("processList")String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -1053,12 +1053,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[addProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
+	public String delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -1072,12 +1072,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delAllProcessReferences(@QueryParam("businessId")String businessId) {
+	public String delAllProcessReferences(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -1090,12 +1090,12 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delAllProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
+	public String delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -1109,7 +1109,7 @@ public class ProductAttributeAPI implements AttributeServicePointInterface{
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
-		return retVal;
+		return String.valueOf(retVal);
 	}
 
 	@Path(CampRest.AttributeValue.Prefix+CampRest.ProcessReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
