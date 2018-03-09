@@ -138,7 +138,15 @@ public class ProductAPI implements ProductServicePointInterface {
 			_f = "[_saveList]";
 			msg = "====[ save product list ]====";LOG.traceEntry(String.format(fmt,_f,msg));
 		}
-		ProductList pl = ProductList._fromJson(productList);
+		ProductList pl = new ProductList();
+		if(!Util._IN_PRODUCTION){msg = "----[Product list size("+pl.size()+")]----";LOG.info(String.format(fmt, _f,msg));}
+		try {
+			pl = ProductList._fromJson(productList);
+		} catch(Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+			e.printStackTrace();
+			return "[]";
+		}
 		
 		pl = ProductDao.instance().saveList(pl, !Util._IN_PRODUCTION);
 		
@@ -292,8 +300,14 @@ public class ProductAPI implements ProductServicePointInterface {
 				msg = "====[ product service api: load list of orders by group '"+group+"' and version '"+version+"']====";LOG.traceEntry(String.format(fmt,_f,msg));
 			}
 			
-			String json = ((ProductList)ProductDao.instance().loadListByGroupVersion(group, version, !Util._IN_PRODUCTION)).toJson();
-			
+			String json = "[]";
+			try {
+				json = ((ProductList)ProductDao.instance().loadListByGroupVersion(group, version, !Util._IN_PRODUCTION)).toJson();
+				if(!Util._IN_PRODUCTION){msg = "----[product service call: result JSON("+json+")]----";LOG.info(String.format(fmt, _f,msg));}
+			} catch (Exception e) {
+				if(!Util._IN_PRODUCTION){msg = "----[ JSON EXCEPTION! transform FAILED.]----";LOG.info(String.format(fmt,_f,msg));}
+				e.printStackTrace();
+			}
 			if(!Util._IN_PRODUCTION) {
 				String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 				msg = "====[loadListByGroupVersion completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
