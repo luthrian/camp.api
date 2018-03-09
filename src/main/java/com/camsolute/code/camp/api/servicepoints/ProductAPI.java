@@ -80,7 +80,13 @@ public class ProductAPI implements ProductServicePointInterface {
 		p = ProductDao.instance().save(p,!Util._IN_PRODUCTION);
 		if(!Util._IN_PRODUCTION){msg = "----[Persisted Product instance]----";LOG.info(String.format(fmt, _f,msg));}
 			
-		String json = p.toJson();
+		String json = "{}";
+		try {
+			json = p.toJson();
+		} catch (Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[JSON Exception! failed to transform service call result to JSON String.]----";LOG.info(String.format(fmt, _f,msg));}
+			e.printStackTrace();
+		}
 		
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
