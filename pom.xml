@@ -175,6 +175,7 @@
     </dependencies>
     
   <build>
+  	<finalName>${project.artifactId}</finalName>
       <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -189,8 +190,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.4</version>
+				<version>3.2.0</version>
 				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<packageName>camp.api</packageName>
+						</manifest>
+					</archive>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
