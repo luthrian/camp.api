@@ -479,9 +479,27 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 		return retVal;
 	}
 
-	@Path(CampRest.OrderPosition.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.OrderPosition.Prefix+CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReferences(@QueryParam("businessId")String businessId) {
+	public int delAllProcessReferences(@QueryParam("businessId")String businessId) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[delAllProcessReferences]";
+			msg = "====[ order position service call: deregister all processes associated with order from the reference table  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		int retVal = OrderPositionDao.instance().delAllProcessReferences(businessId, !Util._IN_PRODUCTION);
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[delAllProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return retVal;
+	}
+
+	@Path(CampRest.OrderPosition.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public int delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -489,7 +507,8 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			_f = "[delProcessReferences]";
 			msg = "====[ order position service call: deregister all processes associated with order from the reference table  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		int retVal = OrderPositionDao.instance().delProcessReferences(businessId, !Util._IN_PRODUCTION);
+		ProcessList pl = ProcessList._fromJson(processList);
+		int retVal = OrderPositionDao.instance().delProcessReferences(businessId,pl, !Util._IN_PRODUCTION);
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));

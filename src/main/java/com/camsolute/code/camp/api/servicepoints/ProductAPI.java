@@ -457,17 +457,36 @@ public class ProductAPI implements ProductServicePointInterface {
 		return retVal;
 	}
 
-	@Path(CampRest.Product.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.Product.Prefix+CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public int delProcessReferences(@QueryParam("businessId")String businessId) {
+	public int delAllProcessReferences(@QueryParam("businessId")String businessId) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[delAllProcessReferences]";
+			msg = "====[ product service call: deregister all processes associated with product from the reference table  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		int retVal = ProductDao.instance().delAllProcessReferences(businessId, !Util._IN_PRODUCTION);
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[delAllProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return retVal;
+	}
+
+	@Path(CampRest.Product.Prefix+CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public int delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
 		if(!Util._IN_PRODUCTION) {
 			_f = "[delProcessReferences]";
-			msg = "====[ product service call: deregister all processes associated with product from the reference table  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+			msg = "====[ product service call: deregister a list processes associated with product from the reference table  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-		int retVal = ProductDao.instance().delProcessReferences(businessId, !Util._IN_PRODUCTION);
+		ProcessList pl = ProcessList._fromJson(processList);
+		int retVal = ProductDao.instance().delProcessReferences(businessId,pl, !Util._IN_PRODUCTION);
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
@@ -776,6 +795,24 @@ public class ProductAPI implements ProductServicePointInterface {
 		return retVal;
 	}
 
+	@Path(CampRest.Product.Prefix+CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public int delAllModelReferences(@QueryParam("parentBusinessId")String businessId) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[delAllModelReferences]";
+			msg = "====[ product service call: deregister all associated product model instances from the reference table ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		int retVal = ProductDao.instance().delAllModelReferences(businessId, !Util._IN_PRODUCTION);
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[delAllModelReferences completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return retVal;
+	}
+
 	@Path(CampRest.Product.Prefix+CampRest.ModelReferenceDaoService.Prefix+CampRest.ReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public int delModelReferences(@QueryParam("parentBusinessId")String businessId, String modelList) {
@@ -784,7 +821,7 @@ public class ProductAPI implements ProductServicePointInterface {
 		String msg = null;
 		if(!Util._IN_PRODUCTION) {
 			_f = "[delModelReferences]";
-			msg = "====[ product service call: deregister an associated product model instance from the reference table ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+			msg = "====[ product service call: deregister a list of associated product model instances from the reference table ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
 		int retVal = ProductDao.instance().delModelReferences(businessId, ModelList._fromJson(modelList), !Util._IN_PRODUCTION);
 		if(!Util._IN_PRODUCTION) {
