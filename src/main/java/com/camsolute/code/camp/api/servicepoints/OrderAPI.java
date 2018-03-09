@@ -181,9 +181,9 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-	@Path(CampRest.Order.Prefix+CampRest.DaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.Order.Prefix+CampRest.DaoService.UPDATE_ATTRIBUTE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String updateAttribute(String attributeType, String businessId, String attributeValue) {
+	public String updateAttribute(@QueryParam("attributeType")String attributeType, @QueryParam("businessId")String businessId, @QueryParam("attributeValue")String attributeValue) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;

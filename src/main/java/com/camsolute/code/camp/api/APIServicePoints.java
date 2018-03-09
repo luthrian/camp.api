@@ -19,6 +19,9 @@
  ******************************************************************************/
 package com.camsolute.code.camp.api;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import javax.ws.rs.ApplicationPath;
 
 import org.apache.logging.log4j.LogManager;
@@ -43,11 +46,21 @@ public class APIServicePoints extends ResourceConfig {
 			_f = "[APIServicePoints]";
 			msg = "====[ Configuring service points... ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
-			packages("com.camsolute.code.camp.api.servicepoints");
 			
-			register(AuthenticationFilter.class);
+		//TODO: put this in a better place 
+		// register required jdbc driver
+		try{
+			DriverManager.registerDriver(new org.mariadb.jdbc.Driver ());
+		} catch (SQLException e) {
+			if(!Util._IN_PRODUCTION){msg = "----[SQLExceeption! Failed to register jdbc driver DriverManager.registerDriver(new org.mariadb.jdbc.Driver())]----";LOG.info(String.format(fmt, _f,msg));}
+			e.printStackTrace();
+		}
+		
+		packages("com.camsolute.code.camp.api.servicepoints");
 			
-			register(ExceptionHandler.class);
+		register(AuthenticationFilter.class);
+			
+		register(ExceptionHandler.class);
 			
 			
 		if(!Util._IN_PRODUCTION) {
