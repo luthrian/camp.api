@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2017 Christopher Campbell (campbellccc@gmail.com)
+ * Copyright (C) 2018 Christopher Campbell
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * Contributors:
- * 	Christopher Campbell (campbellccc@gmail.com) - all code prior and post initial release
+ * 	Christopher Campbell - all code prior and post initial release
  ******************************************************************************/
 package com.camsolute.code.camp.api.servicepoints;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -65,10 +66,19 @@ public class ProductAPI implements ProductServicePointInterface {
 		String msg = null;
 		if(!Util._IN_PRODUCTION) {
 			_f = "[create]";
-			msg = "====[ create product ]====";LOG.traceEntry(String.format(fmt,_f,msg));
+			msg = "====[ product service call: create product a product object instance and persist it to the database ]====";LOG.traceEntry(String.format(fmt,_f,msg));
 		}
-		Product p = new Product(businessId, businessKey, new Group(group), new Version(version), Util.Time.timestamp(date));
+		Timestamp d = Util.Time.timestamp();
+		try {
+			d =  Util.Time.timestamp(date);
+		} catch(Exception e) {
+			if(!Util._IN_PRODUCTION){msg = "----[Exception! Date has wrong format. ("+date+"). Using current date and time instead.]----";LOG.info(String.format(fmt, _f,msg));}
+			e.printStackTrace();
+		}
+		Product p = new Product(businessId, businessKey, new Group(group), new Version(version),d);
+		if(!Util._IN_PRODUCTION){msg = "----[Created new Product("+businessId+")]----";LOG.info(String.format(fmt, _f,msg));}
 		p = ProductDao.instance().save(p,!Util._IN_PRODUCTION);
+		if(!Util._IN_PRODUCTION){msg = "----[Persisted Product instance]----";LOG.info(String.format(fmt, _f,msg));}
 			
 		String json = p.toJson();
 		
