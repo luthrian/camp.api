@@ -47,7 +47,7 @@ public class APIServicePoints extends ResourceConfig {
 			
 		register(AuthenticationFilter.class);
 			
-		register(ExceptionHandler.class);
+//		register(ExceptionHandler.class);
 			
 			
 		if(!Util._IN_PRODUCTION) {
