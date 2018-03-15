@@ -19,9 +19,6 @@
  ******************************************************************************/
 package com.camsolute.code.camp.api;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import javax.ws.rs.ApplicationPath;
 
 import org.apache.logging.log4j.LogManager;
