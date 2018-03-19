@@ -63,8 +63,7 @@ public class OrderAPI implements OrderServicePointInterface {
 	
 	@Path(CampRest.DaoService.CREATE_ORDER) @GET @Produces(MediaType.APPLICATION_JSON)	
 	@Override
-	public String create(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("date")String date, @QueryParam("byDate")String byDate) {
-		boolean log = true;
+	public String create(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("date")String date, @QueryParam("byDate")String byDate, @QueryParam("group")String group, @QueryParam("version")String version) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -74,6 +73,8 @@ public class OrderAPI implements OrderServicePointInterface {
 		}
 		Order o = new Order(businessId, businessKey, byDate);
 		o.setByDate(Util.Time.timestamp(byDate));
+		o.setGroup(group);
+		o.setVersion(version);
 		
 		o = OrderDao.instance().save(o,!Util._IN_PRODUCTION);
 		

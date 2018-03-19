@@ -21,6 +21,7 @@ package com.camsolute.code.camp.api;
 
 import javax.ws.rs.ApplicationPath;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.server.ResourceConfig;
