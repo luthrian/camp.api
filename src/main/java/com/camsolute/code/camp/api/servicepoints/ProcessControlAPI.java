@@ -34,6 +34,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 
 import com.camsolute.code.camp.lib.contract.HasProcess;
 import com.camsolute.code.camp.lib.dao.rest.ProcessControlServicePointInterface;
@@ -49,6 +50,7 @@ import com.camsolute.code.camp.lib.models.order.OrderPositionInterface;
 import com.camsolute.code.camp.lib.models.order.OrderPositionList;
 import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.models.process.Process;
+import com.camsolute.code.camp.lib.models.process.ProcessDao;
 import com.camsolute.code.camp.lib.models.product.Product;
 import com.camsolute.code.camp.lib.models.product.ProductInterface;
 import com.camsolute.code.camp.lib.models.rest.Message;
@@ -91,6 +93,8 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		String serviceUri = CampRest.ProcessEngineDaoService.callRequest(prefix,CampRest.ProcessEngineDaoService.Request.START_PROCESS);
 		String uri = serverUrl+domainUri+String.format(serviceUri,processKey);
 		String result = RestInterface.resultPost(uri, request, !Util._IN_PRODUCTION);
+		String instanceId = (new JSONObject(result)).getString("id");
+		result = ProcessDao.instance().loadByInstanceId(instanceId, !Util._IN_PRODUCTION).toJson();
 		
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
