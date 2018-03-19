@@ -55,7 +55,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	  <eclipsePluginVersion>2.8</eclipsePluginVersion>
 	  <jdkName>JavaSE-1.8</jdkName>
 	  <jdk.version>1.8</jdk.version>
-    <camp.lib.version>0.6.5</camp.lib.version>
+    <camp.lib.version>0.7.0</camp.lib.version>
     <tomcat.version>8.0.24</tomcat.version>
 	  <slf4j.version>1.7.25</slf4j.version>
 	  <log4j2.version>2.9.0</log4j2.version>
