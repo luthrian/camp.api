@@ -23,6 +23,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -45,7 +46,7 @@ public class AddressAPI implements AddressServicePointInterface {
 	
 	@Path(CampRest.DaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadById(@QueryParam("id")int id) {
+	public String loadById(@PathParam("id")int id) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
