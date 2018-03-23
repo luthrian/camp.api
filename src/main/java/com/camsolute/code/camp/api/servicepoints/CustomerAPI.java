@@ -23,7 +23,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.LogManager;
@@ -45,7 +47,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 	
 	@Path(CampRest.DaoService.LOAD_BY_ID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadById(int id) {
+	public String loadById(@PathParam("id")int id) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -63,7 +65,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadByBusinessId(String businessId) {
+	public String loadByBusinessId(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -81,7 +83,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD_BY_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadListByBusinessKey(String businessKey) {
+	public String loadListByBusinessKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -99,7 +101,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD_BY_GROUP) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadListByGroup(String group) {
+	public String loadListByGroup(@QueryParam("group")String group) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -117,7 +119,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadListByGroupVersion(String group, String version) {
+	public String loadListByGroupVersion(@QueryParam("group")String group, @QueryParam("version")String version) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -211,7 +213,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdates(String businessKey, String target) {
+	public String loadUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -229,7 +231,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD_UPDATES_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdatesByKey(String businessKey) {
+	public String loadUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -247,7 +249,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD_UPDATES_TARGET) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdatesByTarget(String target) {
+	public String loadUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -265,7 +267,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.LOAD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadUpdate(String customer, String businessKey, String target) {
+	public String loadUpdate(String customer, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -284,7 +286,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.ADD_UPDATE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String addToUpdates(String customer, String businessKey, String target) {
+	public String addToUpdates(String customer, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -303,7 +305,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String addListToUpdates(String customerList, String businessKey, String target) {
+	public String addListToUpdates(String customerList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -322,7 +324,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.DELETE_ALL_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String deleteAllFromUpdates(String businessKey, String target) {
+	public String deleteAllFromUpdates(@QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -340,7 +342,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.DELETE_KEY_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String deleteFromUpdatesByKey(String businessKey) {
+	public String deleteFromUpdatesByKey(@QueryParam("businessKey")String businessKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -358,7 +360,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String deleteFromUpdatesByTarget(String target) {
+	public String deleteFromUpdatesByTarget(@QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -376,7 +378,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.DELETE_UPDATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String deleteFromUpdates(String businessId, String businessKey, String target) {
+	public String deleteFromUpdates(@QueryParam("businessId")String businessId, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -394,7 +396,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.DaoService.DELETE_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String deleteListFromUpdates(String customerList, String businessKey, String target) {
+	public String deleteListFromUpdates(String customerList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -413,7 +415,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.InstanceDaoService.LOAD_FIRST) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadFirst(String businessId) {
+	public String loadFirst(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -469,7 +471,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.InstanceDaoService.LOAD_DATE_BY_BID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadDate(String businessId, String date) {
+	public String loadDate(@QueryParam("businessId")String businessId, @QueryParam("date")String date) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -487,7 +489,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.InstanceDaoService.LOAD_DATE_RANGE_BY_BID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadDateRange(String businessId, String startDate, String endDate) {
+	public String loadDateRange(@QueryParam("businessId")String businessId, @QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -505,7 +507,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.InstanceDaoService.LOAD_DATE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadDate(String date) {
+	public String loadDate(@QueryParam("date")String date) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -523,7 +525,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.InstanceDaoService.LOAD_DATE_RANGE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadDateRange(String startDate, String endDate) {
+	public String loadDateRange(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -541,7 +543,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String addProcessReference(String businessId, String instanceId, String processKey) {
+	public String addProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -559,7 +561,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.ProcessReferenceDaoService.ADD_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String addProcessReferences(String businessId, String processList) {
+	public String addProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -578,7 +580,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCE) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String delProcessReference(String businessId, String instanceId, String processKey) {
+	public String delProcessReference(@QueryParam("businessId")String businessId, @QueryParam("instanceId")String instanceId, @QueryParam("processKey")String processKey) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -596,7 +598,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_ALL_REFERENCES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String delAllProcessReferences(String businessId) {
+	public String delAllProcessReferences(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -614,7 +616,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.ProcessReferenceDaoService.DEL_REFERENCES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String delProcessReferences(String businessId, String processList) {
+	public String delProcessReferences(@QueryParam("businessId")String businessId, String processList) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
@@ -633,7 +635,7 @@ public class CustomerAPI implements CustomerServicePointInterface {
 
 	@Path(CampRest.ProcessReferenceDaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String loadProcessReferences(String businessId) {
+	public String loadProcessReferences(@QueryParam("businessId")String businessId) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
