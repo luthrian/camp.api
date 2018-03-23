@@ -40,6 +40,7 @@ import com.camsolute.code.camp.lib.models.customer.CustomerList;
 import com.camsolute.code.camp.lib.utilities.Util;
 import com.camsolute.code.camp.lib.dao.rest.ContactDetailsServicePointInterface;
 
+//TODO:test,docs
 @Path(CampRest.ContactDetails.Prefix)
 public class ContactDetailsAPI implements ContactDetailsServicePointInterface {
 	private static final Logger LOG = LogManager.getLogger(ContactDetailsAPI.class);

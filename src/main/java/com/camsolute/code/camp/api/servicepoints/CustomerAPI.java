@@ -40,6 +40,7 @@ import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.utilities.Util;
 import com.camsolute.code.camp.lib.dao.rest.CustomerServicePointInterface;
 
+//TODO:test,docs
 @Path(CampRest.Customer.Prefix)
 public class CustomerAPI implements CustomerServicePointInterface {
 	private static final Logger LOG = LogManager.getLogger(CustomerAPI.class);

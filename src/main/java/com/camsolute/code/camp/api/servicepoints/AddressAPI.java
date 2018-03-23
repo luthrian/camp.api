@@ -39,6 +39,7 @@ import com.camsolute.code.camp.lib.models.customer.AddressInterface;
 import com.camsolute.code.camp.lib.utilities.Util;
 import com.camsolute.code.camp.lib.dao.rest.AddressServicePointInterface;
 
+//TODO:test,docs
 @Path(CampRest.Address.Prefix)
 public class AddressAPI implements AddressServicePointInterface {
 	private static final Logger LOG = LogManager.getLogger(AddressAPI.class);
