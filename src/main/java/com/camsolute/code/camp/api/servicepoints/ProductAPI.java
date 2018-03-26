@@ -302,6 +302,26 @@ public class ProductAPI implements ProductServicePointInterface {
 			}
 			return json;
 	}
+	
+	@Path(CampRest.DaoService.LOAD_LIST) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadList() {
+			long startTime = System.currentTimeMillis();
+			String _f = null;
+			String msg = null;
+			if(!Util._IN_PRODUCTION) {
+				_f = "[loadList]";
+				msg = "====[ product service api: load all current products ]====";LOG.traceEntry(String.format(fmt,_f,msg));
+			}
+			
+			String json = ((ProductList)ProductDao.instance().loadList(!Util._IN_PRODUCTION)).toJson();
+			
+			if(!Util._IN_PRODUCTION) {
+				String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+				msg = "====[loadList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+			}
+			return json;
+	}
 
 	@Path(CampRest.DaoService.LOAD_BY_GROUP_VERSION) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override

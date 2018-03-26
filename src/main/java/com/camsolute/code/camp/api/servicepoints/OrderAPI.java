@@ -875,30 +875,4 @@ public class OrderAPI implements OrderServicePointInterface {
 		return json;
 	}
 
-
-	@Path(CampRest.InstanceDaoService.ADD_INSTANCE) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
-	@Override
-	public String addInstance(String orderPosition, @QueryParam("useObjectId")boolean useObjectId) {
-		long startTime = System.currentTimeMillis();
-		String _f = null;
-		String msg = null;
-		if(!Util._IN_PRODUCTION) {
-			_f = "[addInstance]";
-			msg = "====[ order service call: add current order object instance to history ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
-		}
-		int retVal = 0;
-		try {
-			retVal = CampInstanceDao.instance().addInstance(OrderPositionInterface._fromJson(orderPosition),useObjectId);
-		} catch (SQLException e) {
-			if(!Util._IN_PRODUCTION){msg = "----[SQL ERROR! loadFirst FAILED]----";LOG.info(String.format(fmt, _f,msg));}
-			e.printStackTrace();
-		}		
-		if(!Util._IN_PRODUCTION) {
-			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
-			msg = "====[addInstance completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
-		}
-		return String.valueOf(retVal);
-	}
-
-
 }
