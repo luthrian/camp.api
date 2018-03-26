@@ -357,7 +357,7 @@ public class TouchPointAPI implements TouchPointServicePointInterface {
 		return String.valueOf(retVal);
 	}
 
-	@Path(CampRest.DaoService.DELETE_TARGET_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.TouchPointDaoService.DELETE_UPDATES) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String deleteFromUpdates(@QueryParam("customerBusinessId")String customerBusinessId, @QueryParam("customerBusinessKey")String customerBusinessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();

@@ -305,7 +305,7 @@ public class AddressAPI implements AddressServicePointInterface {
 
 	@Path(CampRest.DaoService.ADD_UPDATES) @POST @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public String addListToUpdates(String addressList, @QueryParam("businessKey")String businessKey, String target) {
+	public String addListToUpdates(String addressList, @QueryParam("businessKey")String businessKey, @QueryParam("target")String target) {
 		long startTime = System.currentTimeMillis();
 		String _f = null;
 		String msg = null;
