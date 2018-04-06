@@ -179,7 +179,7 @@ public class OrderPositionAPI  implements OrderPositionServicePointInterface{
 			return json;
 	}
 
-	@Path(CampRest.OrderPosition.Prefix + CampRest.DaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Path(CampRest.DaoService.LOAD) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadByBusinessId(@QueryParam("businessId")String businessId) {
 			long startTime = System.currentTimeMillis();

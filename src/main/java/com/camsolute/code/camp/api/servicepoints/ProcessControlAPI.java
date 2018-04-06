@@ -60,6 +60,7 @@ import com.camsolute.code.camp.lib.models.process.Process;
 import com.camsolute.code.camp.lib.models.process.ProcessDao;
 import com.camsolute.code.camp.lib.models.product.Product;
 import com.camsolute.code.camp.lib.models.product.ProductInterface;
+import com.camsolute.code.camp.lib.models.rest.FormVariables;
 import com.camsolute.code.camp.lib.models.rest.Message;
 import com.camsolute.code.camp.lib.models.rest.OrderPositionProcessMessage;
 import com.camsolute.code.camp.lib.models.rest.OrderPositionProcessMessage.OrderPositionMessage;
@@ -399,68 +400,81 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		String msg = null;
 		if(!Util._IN_PRODUCTION) {
 			_f = "[completeTask]";
-			msg = "====[ process control service call:  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+			msg = "====[ process control service call: processInstanceId("+processInstanceId+") ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
 		String taskId = null;
 		String variables = null;
 		String prefix = CampRest.ProcessEngine.Prefix;		
 		String serviceUri = CampRest.ProcessEngineDaoService.callRequest(prefix,CampRest.ProcessEngineDaoService.Request.GET_TASKS);
 		String uri = serverUrl+domainUri+String.format(serviceUri,processInstanceId);
+		if(!Util._IN_PRODUCTION){msg = "----[RESTURI("+uri+")]----";LOG.info(String.format(fmt, _f,msg));}
 		String result = RestInterface.resultGET(uri, !Util._IN_PRODUCTION);
 		TaskList tl = TaskList._fromJson(result);
 		Task t = tl.get(0);
 		Variables v = null;
+		FormVariables fv = new FormVariables();
+		
 		Principal p = Principal.valueOf(principal);
 		switch(p) {
 		case Order:
 			Order o = OrderInterface._fromJson(object);
 			v = new Variables();
-			v.add("objectId",new VariableValue(String.valueOf(o.id()), VariableValueType.Integer));
+			v.add("objectId",new VariableValue(String.valueOf(o.id()), VariableValueType.String));
+			v.add("objectBusinessKey",new VariableValue(o.businessKey(), VariableValueType.String));
 			v.add("objectBusinessId",new VariableValue(o.onlyBusinessId(), VariableValueType.String));
 			v.add("objectStatus",new VariableValue(o.status().name(), VariableValueType.String));
 			v.add("objectType", new VariableValue(o.getClass().getName(),VariableValueType.String));
 			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));
-			variables = v.toJson();
+			fv.setVariables(v);
+			variables = fv.toJson();
 			break;
 		case Product:
 			Product prd = ProductInterface._fromJson(object);
 			v = new Variables();
-			v.add("objectId",new VariableValue(String.valueOf(prd.id()), VariableValueType.Integer));
+			v.add("objectId",new VariableValue(String.valueOf(prd.id()), VariableValueType.String));
+			v.add("objectBusinessKey",new VariableValue(prd.businessKey(), VariableValueType.String));
 			v.add("objectBusinessId",new VariableValue(prd.onlyBusinessId(), VariableValueType.String));
 			v.add("objectStatus",new VariableValue(prd.status().name(), VariableValueType.String));
 			v.add("objectType", new VariableValue(prd.getClass().getName(),VariableValueType.String));
 			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
-			variables = v.toJson();
+			fv.setVariables(v);
+			variables = fv.toJson();
 			break;
 		case Customer:
 			Customer c = CustomerInterface._fromJson(object);
 			v = new Variables();
-			v.add("objectId",new VariableValue(String.valueOf(c.id()), VariableValueType.Integer));
+			v.add("objectId",new VariableValue(String.valueOf(c.id()), VariableValueType.String));
+			v.add("objectBusinessKey",new VariableValue(c.businessKey(), VariableValueType.String));
 			v.add("objectBusinessId",new VariableValue(c.onlyBusinessId(), VariableValueType.String));
 			v.add("objectStatus",new VariableValue(c.status().name(), VariableValueType.String));
 			v.add("objectType", new VariableValue(c.getClass().getName(),VariableValueType.String));
 			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
-			variables = v.toJson();
+			fv.setVariables(v);
+			variables = fv.toJson();
 			break;
 		case Attribute:
 			Attribute<?> a = AttributeInterface._fromJson(object);
 			v = new Variables();
-			v.add("objectId",new VariableValue(String.valueOf(a.id()), VariableValueType.Integer));
-			v.add("objectBusinessId",new VariableValue(a.attributeBusinessKey(), VariableValueType.String));
+			v.add("objectId",new VariableValue(String.valueOf(a.id()), VariableValueType.String));
+			v.add("objectBusinessKey",new VariableValue(a.attributeBusinessKey(), VariableValueType.String));
+			v.add("objectBusinessId",new VariableValue(a.businessId(), VariableValueType.String));
 			v.add("objectStatus",new VariableValue(a.status().name(), VariableValueType.String));
 			v.add("objectType", new VariableValue(a.getClass().getName(),VariableValueType.String));
 			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
-			variables = v.toJson();
+			fv.setVariables(v);
+			variables = fv.toJson();
 			break;
 		case Model:
 			Model m = ModelInterface._fromJson(object);
 			v = new Variables();
-			v.add("objectId",new VariableValue(String.valueOf(m.id()), VariableValueType.Integer));
+			v.add("objectId",new VariableValue(String.valueOf(m.id()), VariableValueType.String));
+			v.add("objectBusinessKey",new VariableValue(m.businessKey(), VariableValueType.String));
 			v.add("objectBusinessId",new VariableValue(m.onlyBusinessId(), VariableValueType.String));
 			v.add("objectStatus",new VariableValue(m.status().name(), VariableValueType.String));
 			v.add("objectType", new VariableValue(m.getClass().getName(),VariableValueType.String));
 			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
-			variables = v.toJson();
+			fv.setVariables(v);
+			variables = fv.toJson();
 			break;
 		default:
 			break;
