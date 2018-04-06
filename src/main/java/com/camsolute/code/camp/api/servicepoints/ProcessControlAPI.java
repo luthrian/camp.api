@@ -406,7 +406,7 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		String prefix = CampRest.ProcessEngine.Prefix;		
 		String serviceUri = CampRest.ProcessEngineDaoService.callRequest(prefix,CampRest.ProcessEngineDaoService.Request.GET_TASKS);
 		String uri = serverUrl+domainUri+String.format(serviceUri,processInstanceId);
-		String result = RestInterface.resultPost(uri, variables, !Util._IN_PRODUCTION);
+		String result = RestInterface.resultGET(uri, !Util._IN_PRODUCTION);
 		TaskList tl = TaskList._fromJson(result);
 		Task t = tl.get(0);
 		Variables v = null;
