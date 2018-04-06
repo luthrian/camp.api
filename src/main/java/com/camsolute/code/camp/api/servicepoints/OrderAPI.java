@@ -190,7 +190,7 @@ public class OrderAPI implements OrderServicePointInterface {
 		String msg = null;
 		if(!Util._IN_PRODUCTION) {
 			_f = "[updateAttribute]";
-			msg = "====[ order service api: update order attribute ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+			msg = "====[ order service api: update order attribute("+attributeType+") ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
 		String json = OrderDao.instance().updateAttribute(UpdateAttribute.valueOf(attributeType), businessId, attributeValue, !Util._IN_PRODUCTION).toJson();
 		if(!Util._IN_PRODUCTION) {
