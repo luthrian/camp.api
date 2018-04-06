@@ -83,6 +83,24 @@ public class ModelAPI implements ModelServicePointInterface {
 		return json;
 	}
 
+	@Path(CampRest.DaoService.LOAD_LIST) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadList() {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[loadList]";
+			msg = "====[  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String json = ModelDao.instance().loadList(!Util._IN_PRODUCTION).toJson();
+				if(!Util._IN_PRODUCTION) {
+					String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+					msg = "====[loadList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+				}
+		return json;
+	}
+
 	@Path(CampRest.DaoService.LOAD_BY_KEY) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public String loadListByBusinessKey(@QueryParam("businessKey")String businessKey) {

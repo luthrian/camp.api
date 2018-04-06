@@ -37,10 +37,17 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 import com.camsolute.code.camp.lib.contract.HasProcess;
+import com.camsolute.code.camp.lib.contract.IsObjectInstance;
 import com.camsolute.code.camp.lib.dao.rest.ProcessControlServicePointInterface;
 import com.camsolute.code.camp.lib.dao.rest.RestInterface;
 import com.camsolute.code.camp.lib.data.CampRest;
+import com.camsolute.code.camp.lib.models.Attribute;
+import com.camsolute.code.camp.lib.models.AttributeInterface;
 import com.camsolute.code.camp.lib.models.CampInstanceDao;
+import com.camsolute.code.camp.lib.models.Model;
+import com.camsolute.code.camp.lib.models.ModelInterface;
+import com.camsolute.code.camp.lib.models.customer.Customer;
+import com.camsolute.code.camp.lib.models.customer.CustomerInterface;
 import com.camsolute.code.camp.lib.models.order.Order;
 import com.camsolute.code.camp.lib.models.order.OrderDao;
 import com.camsolute.code.camp.lib.models.order.OrderInterface;
@@ -65,7 +72,10 @@ import com.camsolute.code.camp.lib.models.rest.OrderProcessMessage.CustomerOrder
 import com.camsolute.code.camp.lib.models.rest.ProcessExecution;
 import com.camsolute.code.camp.lib.models.rest.ProcessExecutionList;
 import com.camsolute.code.camp.lib.models.rest.Request;
+import com.camsolute.code.camp.lib.models.rest.Request.Principal;
 import com.camsolute.code.camp.lib.models.rest.SignalPacket;
+import com.camsolute.code.camp.lib.models.rest.Task;
+import com.camsolute.code.camp.lib.models.rest.TaskList;
 import com.camsolute.code.camp.lib.models.rest.VariableValue;
 import com.camsolute.code.camp.lib.utilities.Util;
 
@@ -378,6 +388,94 @@ public class ProcessControlAPI implements ProcessControlServicePointInterface{
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delegateTask completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+	}
+
+	@Path(CampRest.ProcessControlDaoService.COMPLETE_CURRENT_TASK) @POST @Consumes(MediaType.APPLICATION_JSON)
+	@Override
+	public void completeCurrentTask(@QueryParam("processInstanceId")String processInstanceId, @QueryParam("principal")String principal, String object) {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[completeTask]";
+			msg = "====[ process control service call:  ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String taskId = null;
+		String variables = null;
+		String prefix = CampRest.ProcessEngine.Prefix;		
+		String serviceUri = CampRest.ProcessEngineDaoService.callRequest(prefix,CampRest.ProcessEngineDaoService.Request.GET_TASKS);
+		String uri = serverUrl+domainUri+String.format(serviceUri,processInstanceId);
+		String result = RestInterface.resultPost(uri, variables, !Util._IN_PRODUCTION);
+		TaskList tl = TaskList._fromJson(result);
+		Task t = tl.get(0);
+		Variables v = null;
+		Principal p = Principal.valueOf(principal);
+		switch(p) {
+		case Order:
+			Order o = OrderInterface._fromJson(object);
+			v = new Variables();
+			v.add("objectId",new VariableValue(String.valueOf(o.id()), VariableValueType.Integer));
+			v.add("objectBusinessId",new VariableValue(o.onlyBusinessId(), VariableValueType.String));
+			v.add("objectStatus",new VariableValue(o.status().name(), VariableValueType.String));
+			v.add("objectType", new VariableValue(o.getClass().getName(),VariableValueType.String));
+			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));
+			variables = v.toJson();
+			break;
+		case Product:
+			Product prd = ProductInterface._fromJson(object);
+			v = new Variables();
+			v.add("objectId",new VariableValue(String.valueOf(prd.id()), VariableValueType.Integer));
+			v.add("objectBusinessId",new VariableValue(prd.onlyBusinessId(), VariableValueType.String));
+			v.add("objectStatus",new VariableValue(prd.status().name(), VariableValueType.String));
+			v.add("objectType", new VariableValue(prd.getClass().getName(),VariableValueType.String));
+			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
+			variables = v.toJson();
+			break;
+		case Customer:
+			Customer c = CustomerInterface._fromJson(object);
+			v = new Variables();
+			v.add("objectId",new VariableValue(String.valueOf(c.id()), VariableValueType.Integer));
+			v.add("objectBusinessId",new VariableValue(c.onlyBusinessId(), VariableValueType.String));
+			v.add("objectStatus",new VariableValue(c.status().name(), VariableValueType.String));
+			v.add("objectType", new VariableValue(c.getClass().getName(),VariableValueType.String));
+			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
+			variables = v.toJson();
+			break;
+		case Attribute:
+			Attribute<?> a = AttributeInterface._fromJson(object);
+			v = new Variables();
+			v.add("objectId",new VariableValue(String.valueOf(a.id()), VariableValueType.Integer));
+			v.add("objectBusinessId",new VariableValue(a.attributeBusinessKey(), VariableValueType.String));
+			v.add("objectStatus",new VariableValue(a.status().name(), VariableValueType.String));
+			v.add("objectType", new VariableValue(a.getClass().getName(),VariableValueType.String));
+			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
+			variables = v.toJson();
+			break;
+		case Model:
+			Model m = ModelInterface._fromJson(object);
+			v = new Variables();
+			v.add("objectId",new VariableValue(String.valueOf(m.id()), VariableValueType.Integer));
+			v.add("objectBusinessId",new VariableValue(m.onlyBusinessId(), VariableValueType.String));
+			v.add("objectStatus",new VariableValue(m.status().name(), VariableValueType.String));
+			v.add("objectType", new VariableValue(m.getClass().getName(),VariableValueType.String));
+			v.add("objectPrincipal", new VariableValue(p.name(),VariableValueType.String));			
+			variables = v.toJson();
+			break;
+		default:
+			break;
+		}
+		if(variables != null) {
+			taskId = t.getId();	
+			prefix = CampRest.ProcessEngine.Prefix;		
+			serviceUri = CampRest.ProcessEngineDaoService.callRequest(prefix,CampRest.ProcessEngineDaoService.Request.COMPLETE_TASK);
+			uri = serverUrl+domainUri+String.format(serviceUri,taskId);
+			result = RestInterface.resultPost(uri, variables, !Util._IN_PRODUCTION);
+			if(!Util._IN_PRODUCTION){msg = "----[SERVICE CALL RESULT: "+result+"]----";LOG.info(String.format(fmt, _f,msg));}
+		}
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[completeTask completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
 		}
 	}
 

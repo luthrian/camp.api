@@ -117,6 +117,24 @@ public class ProcessAPI implements ProcessServicePointInterface {
 		}
 		return json;
 	}
+	
+	@Path(CampRest.ProcessDaoService.LOAD_LIST) @GET @Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public String loadList() {
+		long startTime = System.currentTimeMillis();
+		String _f = null;
+		String msg = null;
+		if(!Util._IN_PRODUCTION) {
+			_f = "[loadList]";
+			msg = "====[ process service api : ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
+		}
+		String json = ProcessDao.instance().loadList(!Util._IN_PRODUCTION).toJson();
+		if(!Util._IN_PRODUCTION) {
+			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
+			msg = "====[loadList completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
+		}
+		return json;
+	}
 
 	@Path(CampRest.ProcessDaoService.CREATE_EID) @GET @Produces(MediaType.APPLICATION_JSON)
 	@Override
