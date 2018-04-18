@@ -30,7 +30,7 @@ import com.camsolute.code.camp.lib.utilities.Util;
 import com.camsolute.code.camp.api.filters.AuthenticationFilter;
 import com.camsolute.code.camp.api.exceptions.ExceptionHandler;
 
-@ApplicationPath("/camp")
+@ApplicationPath("/")
 public class APIServicePoints extends ResourceConfig {
 	private static final Logger LOG = LogManager.getLogger(APIServicePoints.class);
 	private static String fmt = "[%15s] [%s]";
