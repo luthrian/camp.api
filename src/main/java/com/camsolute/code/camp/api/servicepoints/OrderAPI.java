@@ -47,6 +47,7 @@ import com.camsolute.code.camp.lib.models.order.OrderList;
 import com.camsolute.code.camp.lib.models.order.OrderPositionInterface;
 import com.camsolute.code.camp.lib.models.order.OrderPositionList;
 import com.camsolute.code.camp.lib.models.order.OrderRest;
+import com.camsolute.code.camp.lib.models.process.ProcessDao;
 import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.utilities.Util;
 
@@ -575,7 +576,7 @@ public class OrderAPI implements OrderServicePointInterface {
 			msg = "====[ order service call: deregister an associate with a process from the reference table ]====";LOG.traceEntry(String.format(fmt,(_f+">>>>>>>>>").toUpperCase(),msg));
 		}
 		int retVal = OrderDao.instance().delProcessReference(businessId, instanceId, processKey, !Util._IN_PRODUCTION);
-		
+		ProcessDao.instance().__dP(instanceId,!Util._IN_PRODUCTION);
 		if(!Util._IN_PRODUCTION) {
 			String time = "[ExecutionTime:"+(System.currentTimeMillis()-startTime)+")]====";
 			msg = "====[delProcessReference completed.]====";LOG.info(String.format(fmt,("<<<<<<<<<"+_f).toUpperCase(),msg+time));
