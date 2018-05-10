@@ -22,7 +22,6 @@ package com.camsolute.code.camp.api.servicepoints;
 
 import java.sql.SQLException;
 
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,7 +33,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.glassfish.jersey.logging.LoggingFeature;
 
 import com.camsolute.code.camp.lib.dao.rest.OrderServicePointInterface;
 import com.camsolute.code.camp.lib.data.CampRest;
@@ -44,9 +42,7 @@ import com.camsolute.code.camp.lib.models.order.Order.UpdateAttribute;
 import com.camsolute.code.camp.lib.models.order.OrderDao;
 import com.camsolute.code.camp.lib.models.order.OrderInterface;
 import com.camsolute.code.camp.lib.models.order.OrderList;
-import com.camsolute.code.camp.lib.models.order.OrderPositionInterface;
 import com.camsolute.code.camp.lib.models.order.OrderPositionList;
-import com.camsolute.code.camp.lib.models.order.OrderRest;
 import com.camsolute.code.camp.lib.models.process.ProcessDao;
 import com.camsolute.code.camp.lib.models.process.ProcessList;
 import com.camsolute.code.camp.lib.utilities.Util;
